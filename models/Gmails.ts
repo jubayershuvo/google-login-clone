@@ -46,9 +46,6 @@ const GmailSchema = new Schema<IGmail>(
     }
 );
 
-// Prevent duplicate emails
-GmailSchema.index({ email: 1 }, { unique: true });
-
 const Gmail: Model<IGmail> =
     mongoose.models.Gmail ||
     mongoose.model<IGmail>("Gmail", GmailSchema);
