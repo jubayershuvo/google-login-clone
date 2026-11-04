@@ -61,7 +61,7 @@ function GoogleMark() {
 
 function HeaderBar({ title }: { title: string }) {
     return (
-        <div className="absolute top-0 left-0 right-0 h-12 px-4 flex items-center border-b border-[#c4c7c5] dark:border-[#444746]">
+        <div className="absolute top-0 left-0 right-0 h-14 px-4 flex items-center border-b border-[#c4c7c5] dark:border-[#444746]">
             <div className="w-5 h-6 shrink-0">
                 <GoogleMark />
             </div>
@@ -318,7 +318,7 @@ export default function GoogleSignInFlow({id}: {id: string}) {
                 <div className={cardClass}>
                     <HeaderBar title="Sign in with Google" />
 
-                    <div className="flex flex-col w-full">
+                    <div className="flex flex-col w-full pt-2">
                         <DesktopGrid
                             left={
                                 <>
