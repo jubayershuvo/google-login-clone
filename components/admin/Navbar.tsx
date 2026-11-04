@@ -38,7 +38,7 @@ export default function AdminNavbar() {
   const navItems = [
     {
       name: "Dashboard",
-      href: "/admin/dashboard",
+      href: "/admin",
       icon: LayoutDashboard,
     },
     {
@@ -55,7 +55,7 @@ export default function AdminNavbar() {
 
         {/* Logo */}
         <Link
-          href="/admin/dashboard"
+          href="/admin"
           className="flex items-center gap-3"
         >
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600">

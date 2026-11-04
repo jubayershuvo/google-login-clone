@@ -20,7 +20,10 @@
     --foreground: #ededed;
   }
 }
-
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
 body {
   background: var(--background);
   color: var(--foreground);
