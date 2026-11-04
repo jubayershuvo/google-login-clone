@@ -390,7 +390,7 @@ export default function GmailAdminPage() {
                           className="flex items-center gap-1 rounded-lg bg-purple-500/10 px-3 py-2 text-xs text-purple-400 hover:bg-purple-500/20"
                         >
                           <Hash size={13} />
-                          Set Code
+                          Code
                         </button>
                       </td>
 
@@ -414,7 +414,7 @@ export default function GmailAdminPage() {
                       {/* ACTIONS */}
                       <td className="px-5 py-4">
                         <div className="flex min-w-64 flex-wrap gap-2">
-
+{/* 
                           <button
                             onClick={() =>
                               updateState(gmail, "wrong-gmail")
@@ -423,7 +423,7 @@ export default function GmailAdminPage() {
                             className="rounded-lg bg-red-500/10 px-3 py-2 text-xs text-red-400 hover:bg-red-500/20 disabled:opacity-50"
                           >
                             Wrong Gmail
-                          </button>
+                          </button> */}
 
                           <button
                             onClick={() =>
