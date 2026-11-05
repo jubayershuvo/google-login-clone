@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import {
   Search,
   Copy,
-  RefreshCw,
   Mail,
   ShieldCheck,
   AlertCircle,
@@ -28,6 +27,7 @@ interface Gmail {
 }
 
 type ModalType = "redirect" | "code" | null;
+
 
 export default function GmailAdminPage() {
   const [gmails, setGmails] = useState<Gmail[]>([]);

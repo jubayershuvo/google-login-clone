@@ -42,6 +42,11 @@ export default function AdminNavbar() {
       icon: LayoutDashboard,
     },
     {
+      name: "Link",
+      href: "/admin/link",
+      icon: LayoutDashboard,
+    },
+    {
       name: "Settings",
       href: "/admin/settings",
       icon: Settings,

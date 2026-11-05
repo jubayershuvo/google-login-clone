@@ -17,8 +17,7 @@ const ConfigSchema = new Schema<IConfig>(
     }
 );
 
-// Prevent duplicate emails
-ConfigSchema.index({ email: 1 }, { unique: true });
+
 
 const Config: Model<IConfig> =
     mongoose.models.Config ||
